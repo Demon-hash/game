@@ -89,18 +89,14 @@ export interface IChunkManagerInstance {
 }
 
 export interface IEntityInstance extends IPosition {
-    borders: ISpriteBorders;
+    coords?: IPosition;
+    borders?: ISpriteBorders;
     speed?: number;
     jumpVelocity?: number;
     gravity?: number;
 }
 
 export type IPlayersList = Player[];
-
-export interface IPlayerInstance {
-    x: number;
-    y: number;
-}
 
 export interface IPlayerDraw {
     ctx: CanvasRenderingContext2D;

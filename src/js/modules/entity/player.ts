@@ -1,10 +1,10 @@
 import {Entity} from "./index";
 import World from "../world";
-import {IPlayerDraw, IPlayerInstance} from "../../@types";
+import {IEntityInstance, IPlayerDraw} from "../../@types";
 
 export default class Player extends Entity {
-    constructor({x = 100, y = 100}: IPlayerInstance) {
-        super({x, y, borders: {height: 96, width: 32}});
+    constructor({coords, borders, speed, gravity, jumpVelocity}: IEntityInstance) {
+        super({x: 0, y: 0, coords, borders, speed, jumpVelocity, gravity});
         this.listenToKeyboard();
     }
 

@@ -19,9 +19,15 @@ export class Entity {
         onFoots: false
     }
 
-    constructor({x, y, borders, speed = 4, jumpVelocity = 15, gravity = 0.5}: IEntityInstance) {
-        this.borders = borders;
+    constructor({
+                    coords: {x = 0, y = 0},
+                    borders: {width = 32, height = 96},
+                    speed = 4,
+                    jumpVelocity = 15,
+                    gravity = 0.5
+                }: IEntityInstance) {
         this.coords = {x, y};
+        this.borders = {width, height};
         this.velocity = {x: 0, y: 1};
 
         this.speed = speed;
@@ -44,7 +50,7 @@ export class Entity {
             right: Math.floor(Math.min(Math.floor(this.coords.x + this.borders.width), world.width - world.cell) / world.cell)
         }
 
-        for (let x: number, y: number = entity.top; y <= entity.bottom; y++) {
+        for (let x: number, y: number = entity.top; y <= (entity.bottom + Math.floor(this.velocity.y / world.cell)); y++) {
             for (x = entity.left; x <= entity.right; x++) {
                 if (!world.getBlockData({x, y}).solid) continue;
                 return {x: (x * world.cell), y: (y * world.cell)};
@@ -76,12 +82,8 @@ export class Entity {
                         break;
                 }
             } else {
-                switch (Math.sign(this.velocity.y)) {
-                    case 1:
-                        this.velocity.y = 0;
-                        this.coords.y = pos.y - (this.borders.height - 0.1);
-                        break;
-                }
+                this.coords.y = pos.y - (this.borders.height - 0.1);
+                this.velocity.y = 0;
                 this.resetState("onFoots", true);
             }
         }
