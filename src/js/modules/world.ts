@@ -36,7 +36,7 @@ export default class World {
     }
 
     getBlockIndex({x, y}: IPosition): number {
-        return (y * this._width) + x;
+        return Math.floor((y * this._width) + x);
     }
 
     setBlock({x, y, id}: IWorldSetBlock) {
@@ -91,7 +91,7 @@ export default class World {
         for (let x: number, y: number = viewYBegin; y < viewYEnd; y++) {
             for (x = viewXBegin; x < viewXEnd; x++) {
                 ctx.save();
-                ctx.translate((x * this.cell) - camera.x, (y * this.cell) - camera.y);
+                ctx.translate(Math.floor((x * this.cell) - camera.x), Math.floor((y * this.cell) - camera.y));
                 this.resources[this.blocks[this.getBlockIndex({x, y})]].sprite.draw(ctx);
                 ctx.restore();
             }

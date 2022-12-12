@@ -21,6 +21,10 @@ export default class Screen {
         this.resize();
         this.redraw();
 
+        for (const player of this.players) {
+            player.attachToWorld(this.world);
+        }
+
         this.canvas.addEventListener("mouseup", (event: MouseEvent) => {
             const pos = { x: Math.floor((event.x + this.camera.x) / 16), y: Math.floor((event.y + this.camera.y) / 16 ) };
             this.world.setBlock({...pos, id: 3 });
@@ -47,7 +51,7 @@ export default class Screen {
                         ww: this.world.width,
                         wh: this.world.height
                     });
-                    player.update(this.world);
+                    player.update();
                     player.draw({ctx: this.ctx, camera: this.camera});
                     break;
                 default:
@@ -57,7 +61,7 @@ export default class Screen {
                         w: player.borders.width,
                         h: player.borders.height
                     })) {
-                        player.update(this.world);
+                        player.update();
                         player.draw({ctx: this.ctx, camera: this.camera});
                     }
                     break;

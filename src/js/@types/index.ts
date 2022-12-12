@@ -4,10 +4,18 @@ import ResourceManager from "../modules/system/resource-manager";
 import Player from "../modules/entity/player";
 import Sprite from "../modules/system/sprite";
 
+export interface ISpriteCropBox {
+    offset: IPosition;
+    size: ISpriteBorders;
+}
+
 export interface ISpriteInstance {
     src: string;
     x: number;
     y: number;
+    cropBox?: ISpriteCropBox;
+    w?: number;
+    h?: number;
 }
 
 export interface ISpriteBorders {
